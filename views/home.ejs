@@ -32,19 +32,19 @@
         
         <div>
                 <ul>
-                        <% var index=0; for(let i of contact_list) { %>
+                        <% for(let i of contact_list) { %>
                         <li>
                                 <div class="contact-item">
                                 <div class="contact-item-name"><%= i.name %> </div>
                                 <div class="contact-item-number"> <%= i.phone %> </div>
                                 <div class="contact-list-delete">
-                                        <a href="/delete-contact-index?index=<%= index %>" class="byIndex">
+                                        <a href="/delete-contact?id=<%= i.id %>" class="byIndex">
                                                 <i class="fas fa-times"></i>
                                         </a>
                                 </div>
                                 </div>
                         </li>
-                        <% index++; } %>
+                        <%  } %>
                 </ul>
         </div>
         

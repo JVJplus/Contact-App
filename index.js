@@ -2,8 +2,9 @@ const express=require('express');
 const path=require('path');
 const port=585;
 
+const db=require('./config/mongoose');
+const Contact=require('./models/contact');
 const app=express();
-
 
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
@@ -12,11 +13,19 @@ app.use(express.urlencoded());
 app.use(express.static('assests'));
 
 app.get('/', function (req,res) {
-        res.render('home',{
-                title:"Contact List",
-                contact_list:contactList,
-                counter:2
-        });
+        Contact.find({},function (err,contacts) {
+                if(err){
+                        console.log("error in fecting contacts from db");
+                        return;
+                }
+
+                return res.render('home', {
+                        //sending to the server details of template
+                        title: "Contact List",
+                        contact_list: contacts
+                });
+
+        })
 })
 
 app.get('/practice', function (req,res) {
@@ -56,7 +65,22 @@ app.post('/create-contact',function(req,res){
         console.log("contact-added");
         
         // contactList.push(req.body);
-        contactList.unshift(req.body);
+        // contactList.unshift(req.body);
+
+        //adding to database
+        Contact.create({
+                name: req.body.name,
+                phone:req.body.phone
+        }, function(err,newContact){
+                if(err){
+                        console.log('error in creating a contact');
+                       return; 
+                }
+
+                console.log('Contact Added to Database');
+        }
+        );
+
         return res.redirect('back');
 });
 
@@ -73,12 +97,17 @@ app.post('/sort-contact-by-name', function (req, res) {
         return res.redirect('back');
 });
 
-app.get('/delete-contact-index', function(req,res){
-        console.log("deleting a contact");
+app.get('/delete-contact', function(req,res){
+        //get the id from query parameter 
+        var id = req.query.id;
 
-        var index = req.query.index;
-
-        contactList.splice(index, 1);
+        //find the contact in the db and usig id delete it
+        Contact.findByIdAndDelete(id,function(err){
+                if(err){
+                        console.log('error in deleting from db');
+                        return;
+                }
+        });
         return res.redirect('back');
 });
 
