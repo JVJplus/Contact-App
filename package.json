@@ -1,0 +1,15 @@
+{
+  "name": "contact_list",
+  "version": "1.0.0",
+  "description": "learning express withe project of contact list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jay Prakash",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1"
+  }
+}

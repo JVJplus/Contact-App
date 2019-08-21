@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        <title>HomePage</title>
+        
+        <script src="https://kit.fontawesome.com/87cd869b0a.js"></script>
+        <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+        
+        <h1>
+                Contact List
+        </h1>
+        
+        <div class="form-inputs">
+                <form  action="/create-contact" method="POST" style="display: inline-block">
+                        <input type="text" name="name" placeholder="Enter  Name" > 
+                        <input type="text" name="phone" placeholder="Enter  Phone Number ">
+                        <button type="submit" >Add Contact</button>
+                </form>
+                
+                <form action="/sort-contact-by-name" method="POST" style="display: inline-block">
+                        <button type="submit">Sort Names</button>
+                </form>
+        </div>
+        
+        <div>
+                <ul>
+                        <% var index=0; for(let i of contact_list) { %>
+                        <li>
+                                <div class="contact-item">
+                                <div class="contact-item-name"><%= i.name %> </div>
+                                <div class="contact-item-number"> <%= i.phone %> </div>
+                                <div class="contact-list-delete">
+                                        <a href="/delete-contact-index?index=<%= index %>" class="byIndex">
+                                                <i class="fas fa-times"></i>
+                                        </a>
+                                </div>
+                                </div>
+                        </li>
+                        <% index++; } %>
+                </ul>
+        </div>
+        
+        <script type="text/javascript" src="js/home.js"></script>
+        
+</body>
+
+</html>
